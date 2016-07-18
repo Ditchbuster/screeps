@@ -1,3 +1,5 @@
+var upgrader = require('role.upgrader')
+
 var roleBuilder = {
 
     /** @param {Creep} creep **/
@@ -17,7 +19,7 @@ var roleBuilder = {
                     creep.moveTo(targets[0]);
                 }
             }else{
-                creep.moveTo(30,37);
+                upgrader.run(creep);
             }
         }
         else {

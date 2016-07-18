@@ -8,6 +8,7 @@ var helper = require('helper');
 
 module.exports.loop = function () {
 
+
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
@@ -35,18 +36,18 @@ module.exports.loop = function () {
             console.log('Spawning new transporter: ' + newName);
         }
         var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-        if (builders.length < 2 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE,MOVE]))){
+        if (builders.length < 5 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE,MOVE]))){
             var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE,MOVE], undefined, {role: 'builder'});
             console.log('Spawning new builder: ' + newName);
         }
         var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-        if (upgraders.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE]))){
+        if (upgraders.length < 1 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE]))){
             var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'upgrader'});
             console.log('Spawning new upgrader: ' + newName);
         }
         var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
-        if (repairers.length < 2 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE]))){
-            var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'repairer'});
+        if (repairers.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE]))){
+            var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'repairer', filling: false});
             console.log('Spawning new repairer: ' + newName);
         }
     }
