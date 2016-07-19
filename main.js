@@ -4,6 +4,7 @@ var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
 var roleTransporter = require('role.transporter');
 var roleDriller = require('role.driller');
+var roleWallBuilder = require('role.wallbuilder');
 var helper = require('helper');
 
 module.exports.loop = function () {
@@ -50,6 +51,14 @@ module.exports.loop = function () {
             var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'repairer', filling: false});
             console.log('Spawning new repairer: ' + newName);
         }
+        var wallbuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'wallbuilder');
+        var targets = creep.room.find(FIND_STRUCTURES, {
+            filter: object => (object.hits < object.hitsMax && object.structureType == STRUCTURE_WALL)
+            });
+        if (wallbuilders.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE])) && targets.length > 0){
+            var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'wallbuilder', filling: false});
+            console.log('Spawning new wallbuilder: ' + newName);
+        }
     }
     }
     
@@ -93,6 +102,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'driller') {
             roleDriller.run(creep);
+        }
+        if(creep.memory.role == 'wallbuilder') {
+            roleWallBuilder.run(creep);
         }
     }
 }
