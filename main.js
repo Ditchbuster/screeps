@@ -4,11 +4,10 @@ var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
 var roleTransporter = require('role.transporter');
 var roleDriller = require('role.driller');
-var roleWallBuilder = require('role.wallbuilder');
+var roleWallRepairer = require('role.wallrepairer');
 var helper = require('helper');
 
 module.exports.loop = function () {
-
 
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -51,13 +50,13 @@ module.exports.loop = function () {
             var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'repairer', filling: false});
             console.log('Spawning new repairer: ' + newName);
         }
-        var wallbuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'wallbuilder');
+        var wallrepairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'wallrepairer');
         var targets = Game.spawns.DCOS.room.find(FIND_STRUCTURES, {
             filter: object => (object.hits < object.hitsMax && object.structureType == STRUCTURE_WALL)
             });
-        if (wallbuilders.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE])) && targets.length > 0){
-            var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'wallbuilder', filling: false});
-            console.log('Spawning new wallbuilder: ' + newName);
+        if (wallrepairers.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE])) && targets.length > 0){
+            var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'wallrepairer', filling: false});
+            console.log('Spawning new wallrepairer: ' + newName);
         }
     }
     }
