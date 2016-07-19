@@ -11,7 +11,7 @@ var roleWallRepairer = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        if(creep.carry.energy < 5 && creep.memory.filling == false){
+        if(creep.carry.energy < 2 && creep.memory.filling == false){
             creep.memory.filling = true;
         }
         if(creep.carry.energy == creep.carryCapacity && creep.memory.filling == true){
@@ -26,7 +26,7 @@ var roleWallRepairer = {
         }
         else {
             var targets = creep.room.find(FIND_STRUCTURES, {
-            filter: object => (object.hits < object.hitsMax && object.structureType == STRUCTURE_CONTAINER)
+            filter: object => (object.hits < object.hitsMax && object.structureType == STRUCTURE_WALL)
             });
 
             //targets.sort((a,b) => a.hits - b.hits);
