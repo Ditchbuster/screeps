@@ -63,7 +63,7 @@ module.exports.loop = function () {
     
     
     /****************DEFENSE**************************/
-    /*var tower = Game.getObjectById('TOWER_ID');
+    var tower = Game.getObjectById('578e40603ca308113b2f77b4');
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
@@ -78,7 +78,7 @@ module.exports.loop = function () {
         }
     }
 
-    */
+    
     /**************CREEPS*****************************/
     //helper.setHarvesting();
     
