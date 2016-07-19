@@ -26,7 +26,7 @@ module.exports.loop = function () {
     }
     else {
         var drillers = _.filter(Game.creeps, (creep) => creep.memory.role == 'driller');
-        if (drillers.length < 1 && !(Game.spawns.DCOS.canCreateCreep([WORK,WORK,WORK,WORK,CARRY,MOVE]))){
+        if (drillers.length < 2 && !(Game.spawns.DCOS.canCreateCreep([WORK,WORK,WORK,WORK,CARRY,MOVE]))){
             var newName = Game.spawns.DCOS.createCreep([WORK,WORK,WORK,WORK,CARRY,MOVE], undefined, {role: 'driller'});
             console.log('Spawning new driller: ' + newName);
         }
