@@ -52,7 +52,7 @@ module.exports.loop = function () {
             console.log('Spawning new repairer: ' + newName);
         }
         var wallbuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'wallbuilder');
-        var targets = creep.room.find(FIND_STRUCTURES, {
+        var targets = Game.spawns.DCOS.room.find(FIND_STRUCTURES, {
             filter: object => (object.hits < object.hitsMax && object.structureType == STRUCTURE_WALL)
             });
         if (wallbuilders.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE])) && targets.length > 0){
