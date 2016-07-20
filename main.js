@@ -5,6 +5,8 @@ var roleRepairer = require('role.repairer');
 var roleTransporter = require('role.transporter');
 var roleDriller = require('role.driller');
 var roleWallRepairer = require('role.wallrepairer');
+var roleAttacker = require('role.attacker');
+var roleReserver = require('role.reserver');
 var helper = require('helper');
 
 module.exports.loop = function () {
@@ -26,7 +28,7 @@ module.exports.loop = function () {
     }
     else {
         var drillers = _.filter(Game.creeps, (creep) => creep.memory.role == 'driller');
-        if (drillers.length < 1 && !(Game.spawns.DCOS.canCreateCreep([WORK,WORK,WORK,WORK,CARRY,MOVE]))){
+        if (drillers.length < 2 && !(Game.spawns.DCOS.canCreateCreep([WORK,WORK,WORK,WORK,CARRY,MOVE]))){
             var newName = Game.spawns.DCOS.createCreep([WORK,WORK,WORK,WORK,CARRY,MOVE], undefined, {role: 'driller'});
             console.log('Spawning new driller: ' + newName);
         }
@@ -57,6 +59,11 @@ module.exports.loop = function () {
         if (wallrepairers.length < 3 && !(Game.spawns.DCOS.canCreateCreep([WORK,CARRY,MOVE])) && targets.length > 0){
             var newName = Game.spawns.DCOS.createCreep([WORK,CARRY,MOVE], undefined, {role: 'wallrepairer', filling: false});
             console.log('Spawning new wallrepairer: ' + newName);
+        }
+        var reservers = _.filter(Game.creeps, (creep) => creep.memory.role == 'reserver');
+        if (reservers.length < 2 && !(Game.spawns.DCOS.canCreateCreep([CLAIM,MOVE,MOVE]))){
+            var newName = Game.spawns.DCOS.createCreep([CLAIM,MOVE,MOVE], undefined, {role: 'reserver'});
+            console.log('Spawning new reserver: ' + newName);
         }
     }
     }
@@ -104,6 +111,12 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'wallrepairer') {
             roleWallRepairer.run(creep);
+        }
+        if(creep.memory.role == 'attacker') {
+            roleAttacker.run(creep);
+        }
+        if(creep.memory.role == 'reserver') {
+            roleReserver.run(creep);
         }
     }
 }
