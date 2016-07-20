@@ -16,7 +16,7 @@ var roleRepairer = {
             }
         }
         else {
-            var targets = creep.room.find(FIND_STRUCTURES, {
+            var targets = creep.room.find(FIND_MY_STRUCTURES, {
             filter: object => (object.hits < object.hitsMax && object.structureType == STRUCTURE_CONTAINER)
             });
 
@@ -27,7 +27,7 @@ var roleRepairer = {
                     creep.moveTo(targets[0]);    
                 }
             }else{
-                var targets = creep.room.find(FIND_STRUCTURES, {
+                var targets = creep.room.find(FIND_MY_STRUCTURES, {
                 filter: object => object.hits < object.hitsMax
                 });
 
