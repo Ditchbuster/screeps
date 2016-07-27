@@ -11,6 +11,10 @@ class Controller {
 	removeController(controller) {
 		this.controllers.delete(controller);
 	}
+
+	size(){
+		return(this.controllers.size);
+	}
 }
 
 module.exports = Controller;

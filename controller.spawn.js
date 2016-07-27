@@ -7,9 +7,13 @@ const Controller = require('controller');
 const C = require('constants');
 
 class SpawnController extends Controller {
+    //const HARVESTER = [[WORK,CARRY,MOVE,MOVE],[WORK,WORK,CARRY,MOVE,MOVE]];
+    //const DRILLER = [[WORK,WORK,CARRY,MOVE],[WORK,WORK,WORK,WORK,CARRY,MOVE]];
+
     constructor(room) {
         super();
         this.room = room;
+        this.spawnList = [];
         for(var name in Game.spawns){
             if(Game.spawns[name].room.name == this.room.name){
                 this.controllers.add(Game.spawns[name]);
@@ -21,20 +25,36 @@ class SpawnController extends Controller {
 
 
     run(){
+        /*for(var i in this.spawnList){
+            console.log(this.spawnList[i]);
+        }*/
         this.controllers.forEach(this.autoSpawn.bind(this));
         /*****************AUTO SPAWN*************************/
 
     }
 
+    pushSpawnList(spawnList){
+        this.spawnList = spawnList;
+    }
+
     autoSpawn(mySpawner){
-        const HARVESTER = [[WORK,CARRY,MOVE,MOVE],[WORK,WORK,CARRY,MOVE,MOVE]];
+        console.log(this.spawnList);
+        if(mySpawner.spawning == null && this.spawnList.length > 0){
+            if(!mySpawner.canCreateCreep(C.SPAWNPARTS[this.spawnList[0]][0])){
+                mySpawner.createCreep(C.SPAWNPARTS[this.spawnList[0]][0],undefined,{role: this.spawnList[0], source: '',target: '', filling: false});
+            }
+        }
+    }
+    /*autoSpawn(mySpawner){
+        //const HARVESTER = [[WORK,CARRY,MOVE,MOVE],[WORK,WORK,CARRY,MOVE,MOVE]];
+        //const DRILLER = [[WORK,WORK,CARRY,MOVE],[WORK,WORK,WORK,WORK,CARRY,MOVE]];
         if (mySpawner.spawning == null){
             var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == C.HARVESTER); 
 
             if(harvesters.length < 2 && !mySpawner.canCreateCreep(HARVESTER[0])){
                 var newName = mySpawner.createCreep(HARVESTER[0], undefined, {role: C.HARVESTER, isHarvesting: false});
                 console.log('Spawning new harvester: ' + newName);
-            }/*else {
+            }else {
                 var drillers = _.filter(Game.creeps, (creep) => creep.memory.role == 'driller');
                 if (drillers.length < 2 && !(mySpawner.canCreateCreep([WORK,WORK,WORK,WORK,CARRY,MOVE]))){
                     var newName = mySpawner.createCreep([WORK,WORK,WORK,WORK,CARRY,MOVE], undefined, {role: 'driller'});
@@ -73,10 +93,10 @@ class SpawnController extends Controller {
                     var newName = mySpawner.createCreep([CLAIM,MOVE,MOVE], undefined, {role: 'reserver'});
                     console.log('Spawning new reserver: ' + newName);
                 }
-            }*/
+            }
         }
 
-    }
+    }*/
 
     //SPAWN BODY PART TIERS
     //const HARVESTER = [[WORK,CARRY,MOVE,MOVE],[WORK,WORK,CARRY,MOVE,MOVE]];
